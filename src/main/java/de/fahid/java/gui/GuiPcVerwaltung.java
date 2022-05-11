@@ -1,5 +1,7 @@
 package de.fahid.java.gui;
 
+import de.fahid.java.LanguageManager;
+
 import javax.swing.*;
 
 public class GuiPcVerwaltung {
@@ -27,4 +29,17 @@ public class GuiPcVerwaltung {
     private JTextField txtCpu;
     private JTextField txtHdd;
     private JTextArea taPcSummary;
+
+    public GuiPcVerwaltung() {
+    }
+
+    public void showGui() {
+        JFrame frame = new JFrame(LanguageManager.getString("AppName"));
+        frame.setContentPane(pnlMain);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(800, 600);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+
 }
