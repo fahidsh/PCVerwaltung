@@ -7,6 +7,16 @@ public class PC {
     private double ram=0;
     private double hdd=0;
 
+    private int id = -1;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public double getTaktfrequenz() {
         return taktfrequenz;
     }

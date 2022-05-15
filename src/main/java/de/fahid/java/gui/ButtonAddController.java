@@ -12,6 +12,10 @@ public class ButtonAddController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(gui == null) { return; }
 
-        System.out.println("ButtonAddController.actionPerformed()");
+        gui.isNewPc = true;
+        gui.txtCpu.setText("");
+        gui.txtRam.setText("");
+        gui.txtHdd.setText("");
+        //System.out.println("ButtonAddController");
     }
 }

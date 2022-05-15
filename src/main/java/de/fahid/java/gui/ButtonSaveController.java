@@ -1,5 +1,10 @@
 package de.fahid.java.gui;
 
+import de.fahid.java.LanguageManager;
+import de.fahid.java.pc_verwaltung.PC;
+import de.fahid.java.pc_verwaltung.PCVerwaltungException;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,6 +17,38 @@ public class ButtonSaveController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(gui == null) { return; }
 
-        System.out.println("ButtonSaveController.actionPerformed()");
+        try {
+            double takt = Double.parseDouble(gui.txtCpu.getText());
+            double ram = Double.parseDouble(gui.txtRam.getText());
+            double hdd = Double.parseDouble(gui.txtHdd.getText());
+
+            PC pc = gui.isNewPc ? new PC() : gui.pcs.getPC(gui.activePCIndex);
+            pc.setTaktfrequenz(takt);
+            pc.setRam(ram);
+            pc.setHdd(hdd);
+
+            if (gui.isNewPc) {
+                gui.dbAdapter.addPc(pc);
+                gui.pcs.addPC(pc);
+                gui.isNewPc = false;
+                //gui.activePCIndex = gui.pcs.getAnzahl()-1;
+                gui.setActivePC(gui.pcs.getAnzahl()-1);
+                gui.updateGui();
+            } else {
+                gui.dbAdapter.updatePc(pc);
+                gui.updateGui();
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(
+                    gui.frame,
+                    LanguageManager.getString("InvalidNumberException"),
+                    LanguageManager.getString("Error"),
+                    JOptionPane.ERROR_MESSAGE);
+
+        } catch (PCVerwaltungException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        //System.out.println("ButtonSaveController");
     }
 }

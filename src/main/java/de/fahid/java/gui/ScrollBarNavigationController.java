@@ -12,6 +12,7 @@ public class ScrollBarNavigationController implements AdjustmentListener {
     @Override
     public void adjustmentValueChanged(AdjustmentEvent e) {
         if(gui == null) { return; }
+        if(gui.skipScrollBarUpdate) { gui.skipScrollBarUpdate = false; return; }
 
         gui.activePCIndex = e.getValue();
         gui.updateGui();

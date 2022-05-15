@@ -18,7 +18,7 @@ public class ButtonExitController implements ActionListener {
 
         // frage nach Bestätigung und beende Programm
         int result = JOptionPane.showConfirmDialog(
-                gui.frame,
+                null,
                 LanguageManager.getString("ExitConfirmation"),
                 LanguageManager.getString("Confirmation"),
                 JOptionPane.YES_NO_OPTION);

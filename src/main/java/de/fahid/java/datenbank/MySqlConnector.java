@@ -66,10 +66,10 @@ public class MySqlConnector implements DbConnector {
         try {
             Class.forName(dbDriver);
             connection = DriverManager.getConnection(getDbUrl(), dbUser, dbPass);
-        } catch (ClassNotFoundException e) {
-            throw new DbConnectorException(e);
-        } catch (SQLException e) {
-            throw new DbConnectorException(e);
+        } catch (ClassNotFoundException ex) {
+            throw new DbConnectorException(ex);
+        } catch (SQLException ex) {
+            throw new DbConnectorException(ex);
         }
         return connection;
     }
@@ -78,18 +78,31 @@ public class MySqlConnector implements DbConnector {
     public void disconnect() throws DbConnectorException {
         try {
             connection.close();
-        } catch (SQLException e) {
-            throw new DbConnectorException(e);
+        } catch (SQLException ex) {
+            throw new DbConnectorException(ex);
         }
     }
 
     @Override
-    public ResultSet getData(String sql) {
-        return null;
+    public ResultSet getData(String sql) throws DbConnectorException {
+        ResultSet resultSet = null;
+
+        try {
+            Connection conn = connect();
+            resultSet = conn.createStatement().executeQuery(sql);
+        } catch (SQLException ex) {
+            throw new DbConnectorException(ex);
+        }
+        return resultSet;
     }
 
     @Override
-    public void execute(String sql) {
-
+    public void execute(String sql) throws DbConnectorException {
+        try {
+            Connection conn = connect();
+            boolean result = conn.createStatement().execute(sql);
+        } catch (SQLException ex) {
+            throw new DbConnectorException(ex);
+        }
     }
 }

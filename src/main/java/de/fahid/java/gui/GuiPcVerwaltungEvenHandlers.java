@@ -22,4 +22,9 @@ public class GuiPcVerwaltungEvenHandlers {
     private void registerScrollBarEvents() {
         gui.sbNavigation.addAdjustmentListener(new ScrollBarNavigationController(gui));
     }
+    private void registerTextBoxEvents() {
+        gui.txtCpu.addActionListener(new TextBoxCommonController(gui));
+        gui.txtRam.addActionListener(new TextBoxCommonController(gui));
+        gui.txtHdd.addActionListener(new TextBoxCommonController(gui));
+    }
 }

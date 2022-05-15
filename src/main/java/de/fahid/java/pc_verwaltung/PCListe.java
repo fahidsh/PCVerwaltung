@@ -1,5 +1,7 @@
 package de.fahid.java.pc_verwaltung;
 
+import de.fahid.java.datenbank.MySqlConnector;
+
 import java.util.ArrayList;
 
 public class PCListe {
@@ -46,6 +48,10 @@ public class PCListe {
         if (index>=0 && index < allePCs.size()) {
             allePCs.remove(index);
         }
+    }
+
+    public void setPC(int id, PC newPC){
+        allePCs.set(id, newPC);
     }
 
     public int getAnzahl(){

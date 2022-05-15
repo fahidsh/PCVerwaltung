@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: de.fahid.java.App
+Class-Path: mysql-connector-java-8.0.11.jar protobuf-java-2.6.0.jar
+
