@@ -6,8 +6,8 @@ public class GuiPcVerwaltungEvenHandlers {
     public GuiPcVerwaltungEvenHandlers(GuiPcVerwaltung gui) { setGui(gui); }
     public void setGui(GuiPcVerwaltung gui) {
         this.gui = gui;
-        registerButtonEvents();
-        registerScrollBarEvents();
+        //registerButtonEvents();
+        //registerScrollBarEvents();
     }
 
     private void registerButtonEvents() {

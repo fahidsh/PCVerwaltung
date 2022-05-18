@@ -247,6 +247,7 @@
               </grid>
             </constraints>
             <properties>
+              <editable value="false"/>
               <tabSize value="2"/>
               <text value=""/>
             </properties>

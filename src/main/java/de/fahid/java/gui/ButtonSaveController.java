@@ -22,22 +22,22 @@ public class ButtonSaveController implements ActionListener {
             double ram = Double.parseDouble(gui.txtRam.getText());
             double hdd = Double.parseDouble(gui.txtHdd.getText());
 
-            PC pc = gui.isNewPc ? new PC() : gui.pcs.getPC(gui.activePCIndex);
+            PC pc = new PC();
             pc.setTaktfrequenz(takt);
             pc.setRam(ram);
             pc.setHdd(hdd);
 
-            if (gui.isNewPc) {
-                gui.dbAdapter.addPc(pc);
+            if (gui.activePCIndex == gui.pcs.getAnzahl()) {
+                gui.dbAdapter.insertPC(pc);
                 gui.pcs.addPC(pc);
-                gui.isNewPc = false;
-                //gui.activePCIndex = gui.pcs.getAnzahl()-1;
-                gui.setActivePC(gui.pcs.getAnzahl()-1);
-                gui.updateGui();
+                System.out.println("new PC added");
             } else {
+                pc.setId(gui.pcs.getPC(gui.activePCIndex).getId());
                 gui.dbAdapter.updatePc(pc);
-                gui.updateGui();
+                gui.pcs.setPC(gui.activePCIndex, pc);
+                System.out.println("PC updated");
             }
+            gui.updateGui();
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(
                     gui.frame,

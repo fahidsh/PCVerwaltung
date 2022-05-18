@@ -29,13 +29,11 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="1793afde-47cf-4887-ab99-deeed854f676">
-      <console name="xampp" type="STANDARD" schema="pcverwaltung" session="Main"><![CDATA[select * from tblpcs;]]></console>
+      <console name="xampp" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="1793afde-47cf-4887-ab99-deeed854f676" object-ref="consoles/xampp" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="1793afde-47cf-4887-ab99-deeed854f676" />

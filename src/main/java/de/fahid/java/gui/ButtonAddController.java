@@ -12,10 +12,12 @@ public class ButtonAddController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(gui == null) { return; }
 
-        gui.isNewPc = true;
         gui.txtCpu.setText("");
         gui.txtRam.setText("");
         gui.txtHdd.setText("");
+        gui.activePCIndex = gui.pcs.getAnzahl();
+        gui.isNewPc = true;
+        gui.txtCpu.requestFocus();
         //System.out.println("ButtonAddController");
     }
 }
