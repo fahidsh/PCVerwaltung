@@ -13,9 +13,10 @@ public class ButtonNextController implements ActionListener {
         if(gui == null) { return; }
 
         if(gui.activePCIndex +1 <= gui.pcs.getAnzahl()) {
-            gui.activePCIndex++;
+            gui.sbNavigation.setValue(gui.activePCIndex + 1);
+            //gui.activePCIndex++;
         }
-        gui.updateGui();
+        //gui.updateGui();
         //System.out.println("ButtonNextController");
     }
 }

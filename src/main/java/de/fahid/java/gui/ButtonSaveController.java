@@ -28,13 +28,11 @@ public class ButtonSaveController implements ActionListener {
             pc.setHdd(hdd);
 
             if (gui.activePCIndex == gui.pcs.getAnzahl()) {
-                gui.dbAdapter.insertPC(pc);
                 gui.pcs.addPC(pc);
                 System.out.println("new PC added");
             } else {
                 pc.setId(gui.pcs.getPC(gui.activePCIndex).getId());
-                gui.dbAdapter.updatePc(pc);
-                gui.pcs.setPC(gui.activePCIndex, pc);
+                gui.pcs.updatePC(gui.activePCIndex, pc);
                 System.out.println("PC updated");
             }
             gui.updateGui();

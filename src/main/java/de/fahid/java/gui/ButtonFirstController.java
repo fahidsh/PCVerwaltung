@@ -12,8 +12,9 @@ public class ButtonFirstController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(gui == null) { return; }
 
-        gui.activePCIndex = 0;
-        gui.updateGui();
+        gui.sbNavigation.setValue(0);
+        //gui.activePCIndex = 0;
+        //gui.updateGui();
         //System.out.println("ButtonFirstController");
     }
 }

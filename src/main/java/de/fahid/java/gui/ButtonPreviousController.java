@@ -13,9 +13,10 @@ public class ButtonPreviousController implements ActionListener {
         if(gui == null) { return; }
 
         if(gui.activePCIndex -1 >= 0) {
-            gui.activePCIndex--;
+            //gui.activePCIndex--;
+            gui.sbNavigation.setValue(gui.activePCIndex -1);
         }
-        gui.updateGui();
+        //gui.updateGui();
         //System.out.println("ButtonPreviousController");
     }
 }

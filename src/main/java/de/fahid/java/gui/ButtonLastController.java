@@ -12,8 +12,9 @@ public class ButtonLastController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(gui == null) { return; }
 
-        gui.activePCIndex = gui.pcs.getAnzahl() - 1;
-        gui.updateGui();
+        gui.sbNavigation.setValue(gui.pcs.getAnzahl() - 1);
+        //gui.activePCIndex = gui.pcs.getAnzahl() - 1;
+        //gui.updateGui();
         //System.out.println("ButtonLastController");
     }
 }

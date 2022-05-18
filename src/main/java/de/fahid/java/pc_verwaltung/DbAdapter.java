@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class DbAdapter {
@@ -51,6 +53,52 @@ public class DbAdapter {
         return pcs;
     }
 
+    public List<Integer> getAlleIds() throws PCVerwaltungException{
+        List<Integer> ids = null;
+        try{
+            String sql = "SELECT id FROM tblpcs;";
+            Connection dbConnection = dbConnector.connect();
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ids = new ArrayList<>();
+            while(resultSet.next()){
+                ids.add(resultSet.getInt(ID_SCHLUSSEL));
+            }
+            printSql(preparedStatement.toString());
+            resultSet.close();
+            preparedStatement.close();
+            dbConnection.close();
+        }  catch (SQLException | DbConnectorException ex) {
+            throw new PCVerwaltungException(ex);
+        }
+        return ids;
+    }
+
+    public PC getPcById(int id) throws PCVerwaltungException{
+        PC pc = null;
+        try{
+            String sql = "SELECT * FROM tblpcs WHERE id=?;";
+            Connection dbConnection = dbConnector.connect();
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                pc = new PC();
+                pc.setTaktfrequenz(resultSet.getDouble(CPU_SCHLUSSEL));
+                pc.setRam(resultSet.getDouble(RAM_SCHLUSSEL));
+                pc.setHdd(resultSet.getDouble(HDD_SCHLUSSEL));
+                pc.setId(resultSet.getInt(ID_SCHLUSSEL));
+            }
+            printSql(preparedStatement.toString());
+            resultSet.close();
+            preparedStatement.close();
+            dbConnection.close();
+        }  catch (SQLException | DbConnectorException ex) {
+            throw new PCVerwaltungException(ex);
+        }
+        return pc;
+    }
+
     public boolean updatePc(PC pc) throws PCVerwaltungException {
         boolean isUpdated = false;
         try {
@@ -62,7 +110,7 @@ public class DbAdapter {
             preparedStatement.setDouble(3, pc.getHdd());
             preparedStatement.setInt(4, pc.getId());
             int result = preparedStatement.executeUpdate();
-            System.out.println(preparedStatement.toString());
+            printSql(preparedStatement.toString());
             preparedStatement.close();
             dbConnection.close();
             isUpdated = result > 0;
@@ -82,7 +130,7 @@ public class DbAdapter {
             preparedStatement.setDouble(2, pc.getRam());
             preparedStatement.setDouble(3, pc.getHdd());
             int result = preparedStatement.executeUpdate();
-            System.out.println(preparedStatement);
+            printSql(preparedStatement.toString());
             preparedStatement.close();
             dbConnection.close();
 
@@ -91,5 +139,29 @@ public class DbAdapter {
             throw new PCVerwaltungException(ex);
         }
         return isInserted;
+    }
+
+    public boolean deletePC(Integer id) throws PCVerwaltungException {
+        boolean isDeleted = false;
+        try {
+            String sql = "DELETE FROM tblpcs WHERE id=?;";
+            Connection dbConnection = dbConnector.connect();
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+
+            int result = preparedStatement.executeUpdate();
+            printSql(preparedStatement.toString());
+            preparedStatement.close();
+            dbConnection.close();
+
+            isDeleted = result > 0;
+        } catch (SQLException | DbConnectorException ex) {
+            throw new PCVerwaltungException(ex);
+        }
+        return isDeleted;
+    }
+
+    private void printSql(String sql) {
+        System.out.println(sql.replace("com.mysql.cj.jdbc.ClientPreparedStatement: ",""));
     }
 }

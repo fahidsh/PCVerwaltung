@@ -5,10 +5,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import de.fahid.java.LanguageManager;
 import de.fahid.java.datenbank.MySqlConnector;
-import de.fahid.java.pc_verwaltung.DbAdapter;
-import de.fahid.java.pc_verwaltung.PC;
-import de.fahid.java.pc_verwaltung.PCListe;
-import de.fahid.java.pc_verwaltung.PCVerwaltungException;
+import de.fahid.java.pc_verwaltung.*;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -23,8 +20,10 @@ public class GuiPcVerwaltung {
     //private GuiPcVerwaltungEvenHandlers evenHandlers = new GuiPcVerwaltungEvenHandlers(this);
     protected JFrame frame;
     protected DbAdapter dbAdapter = new DbAdapter(new MySqlConnector());
-    protected PCListe pcs = null;
+    //protected PCListe pcs = null;
+    protected DynamicPCListe pcs = null;
     protected int activePCIndex = -1;
+    protected PC activePC = null;
 
     protected boolean isNewPc = false;
 
@@ -56,8 +55,9 @@ public class GuiPcVerwaltung {
 
     public GuiPcVerwaltung() {
         changeFont(pnlMain, new Font("Courier New", Font.PLAIN, 16));
-        getAllePcs();
         registerEventHandlers();
+        getAllePcs();
+        updateGui();
     }
 
 
@@ -89,15 +89,10 @@ public class GuiPcVerwaltung {
 
     public void getAllePcs() {
         try {
-            PCListe newPcListe = dbAdapter.getAllePcs();
-            if (newPcListe != null) {
-                pcs = newPcListe;
-            }
-
+            pcs = new DynamicPCListe(dbAdapter);
             setActivePC(0);
-            updateGui();
-        } catch (PCVerwaltungException e) {
-            System.out.println(e.getMessage());
+        } catch (PCVerwaltungException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -110,17 +105,24 @@ public class GuiPcVerwaltung {
     }
 
     public void updateGui() {
-        PC activePC = pcs.getPC(activePCIndex);
-        if (activePC != null) {
-            txtCpu.setText(String.valueOf(activePC.getTaktfrequenz()));
-            txtRam.setText(String.valueOf(activePC.getRam()));
-            txtHdd.setText(String.valueOf(activePC.getHdd()));
-            taPcSummary.setText(activePC.getAusgabeString());
+        try {
+            activePC = pcs.getPC(activePCIndex);
 
-            updateButtons();
-            updateNavigationLabel();
-            sbNavigation.setMaximum(pcs.getAnzahl());
-            sbNavigation.setValue(activePCIndex);
+            if (activePC != null) {
+                txtCpu.setText(String.valueOf(activePC.getTaktfrequenz()));
+                txtRam.setText(String.valueOf(activePC.getRam()));
+                txtHdd.setText(String.valueOf(activePC.getHdd()));
+                taPcSummary.setText(activePC.getAusgabeString());
+
+                updateButtons();
+                updateNavigationLabel();
+
+                sbNavigation.setMaximum(pcs.getAnzahl());
+                sbNavigation.setValue(activePCIndex);
+
+            }
+        } catch (PCVerwaltungException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
