@@ -73,11 +73,29 @@ public class DynamicPCListe {
     }
 
     public void updatePC(int id, PC newPC) throws PCVerwaltungException {
-        dbAdapter.updatePc(newPC);
+        if(newPC!=null && !isSamePC(newPC)) {
+            dbAdapter.updatePc(newPC);
+        }
         aktualisierePcIds();
     }
 
     public int getAnzahl(){
         return pcIds.size();
+    }
+
+    /**
+     * Prüft, ob die übergebene PC-Instanz identisch ist, wie eine PC aus der Datenbank.
+     * @param pc
+     * @return boolean
+     * @throws PCVerwaltungException
+     */
+    public boolean isSamePC(PC pc) throws PCVerwaltungException {
+        boolean isSame = false;
+        int index = pc.getId();
+        if (index>=0) {
+            PC oldPC = dbAdapter.getPcById(pc.getId());
+            isSame = oldPC.getAusgabeString().equals(pc.getAusgabeString());
+        }
+        return isSame;
     }
 }
