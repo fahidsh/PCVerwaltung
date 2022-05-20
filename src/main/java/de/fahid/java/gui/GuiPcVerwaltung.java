@@ -12,6 +12,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.lang.reflect.Method;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -64,12 +65,19 @@ public class GuiPcVerwaltung {
     private void registerEventHandlers() {
         // Butoons
         btnFirst.addActionListener(new ButtonFirstController(this));
+        btnFirst.setMnemonic(KeyEvent.VK_F);
         btnPrevious.addActionListener(new ButtonPreviousController(this));
+        btnPrevious.setMnemonic(KeyEvent.VK_P);
         btnNext.addActionListener(new ButtonNextController(this));
+        btnNext.setMnemonic(KeyEvent.VK_N);
         btnLast.addActionListener(new ButtonLastController(this));
+        btnLast.setMnemonic(KeyEvent.VK_L);
         btnAdd.addActionListener(new ButtonAddController(this));
+        btnAdd.setMnemonic(KeyEvent.VK_A);
         btnSave.addActionListener(new ButtonSaveController(this));
+        btnSave.setMnemonic(KeyEvent.VK_S);
         btnExit.addActionListener(new ButtonExitController(this));
+        btnExit.setMnemonic(KeyEvent.VK_X);
         // ScrollBar
         sbNavigation.addAdjustmentListener(new ScrollBarNavigationController(this));
         // TextBoxes
